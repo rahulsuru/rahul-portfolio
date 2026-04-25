@@ -106,8 +106,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 50px;display:fl
 .pwrap{border:1px solid rgba(255,0,64,.2);padding:3px;position:relative;}
 .pwrap::before{content:'';position:absolute;top:-1px;left:20px;right:20px;height:2px;background:linear-gradient(90deg,transparent,var(--c1),transparent);animation:pScan 3s ease-in-out infinite;}
 @keyframes pScan{50%{left:60%;right:0;opacity:.3}}
-.pinner{background:linear-gradient(135deg,#080812,#0e0e1a);aspect-ratio:4/5;overflow:hidden;position:relative;}
-.pinner img{width:100%;height:100%;object-fit:cover;filter:contrast(1.1) saturate(.9);display:block;}
+.pinner{background:linear-gradient(135deg,#080812,#0e0e1a);aspect-ratio:4/5;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;padding:20px 14px 0;}
+.pinner img{width:110%;height:auto;object-fit:contain;object-position:center;filter:contrast(1.1) saturate(.9);display:block;}
 .pinner::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(255,0,64,.18) 0%,transparent 55%);pointer-events:none;}
 /* corner decorations */
 .pc{position:absolute;width:18px;height:18px;border-color:var(--c2);border-style:solid;}
@@ -305,6 +305,36 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
 @media(max-width:1100px){.vgrid{grid-template-columns:1fr 1fr;}}
 @media(max-width:768px){.vgrid{grid-template-columns:1fr;}}
 
+/* VIDEO CAROUSEL */
+.vc-wrap{margin:32px 0 28px;width:100%;}
+.vc-track-wrap{overflow-x:auto;overflow-y:visible;padding:8px 0 12px;scrollbar-width:none;-ms-overflow-style:none;}
+.vc-track-wrap::-webkit-scrollbar{display:none;}
+.vc-track{display:flex;gap:16px;width:max-content;}
+.vc-card{flex:0 0 200px;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:#080812;position:relative;overflow:hidden;transition:.3s;border-radius:8px;}
+.vc-card:hover{border-color:rgba(255,0,64,.55);transform:translateY(-5px);box-shadow:0 12px 32px rgba(255,0,64,.15);}
+.vc-thumb-wrap{position:relative;aspect-ratio:9/13;overflow:hidden;background:#0a0a16;}
+.vc-thumb{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.82);transition:.3s;}
+.vc-card:hover .vc-thumb{filter:brightness(.55);}
+.vc-thumb-fb{display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-size:36px;background:linear-gradient(135deg,#0c0c1e,#111128);}
+.vc-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,0,64,.5);background:rgba(0,0,0,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--c1);transition:opacity .25s,transform .25s,background .25s,box-shadow .25s;pointer-events:none;z-index:2;opacity:0;}
+.vc-card:hover .vc-play-btn{opacity:1;background:rgba(255,0,64,.22);border-color:var(--c1);transform:translate(-50%,-50%) scale(1.12);box-shadow:0 0 18px rgba(255,0,64,.35);}
+.vc-label{padding:9px 11px;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1px;color:rgba(255,255,255,.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-top:1px solid rgba(255,255,255,.06);}
+
+/* VIDEO MODAL */
+#vcModal{display:none;position:fixed;inset:0;z-index:9000;align-items:center;justify-content:center;}
+#vcModal.open{display:flex;}
+.vcm-bg{position:absolute;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);}
+.vcm-box{position:relative;z-index:1;background:#08080f;border:1px solid rgba(255,0,64,.25);border-radius:10px;overflow:hidden;box-shadow:0 0 60px rgba(255,0,64,.15);display:flex;flex-direction:column;max-height:92vh;}
+.vcm-header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.06);}
+.vcm-title{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--c2);}
+.vcm-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:22px;cursor:pointer;line-height:1;transition:.2s;}
+.vcm-close:hover{color:var(--c1);}
+.vcm-frame{flex:1;min-height:0;position:relative;background:#000;display:flex;align-items:center;justify-content:center;}
+.vcm-frame iframe{width:100%;height:100%;border:none;display:block;}
+.vcm-footer{padding:12px 18px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:center;}
+.vcm-ytbtn{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--c1);text-decoration:none;padding:8px 20px;border:1px solid rgba(255,0,64,.35);transition:.3s;}
+.vcm-ytbtn:hover{background:var(--c1);color:#000;}
+
 /* BACK TO TOP */
 #btt{position:fixed;right:24px;bottom:24px;width:48px;height:48px;background:var(--c1);color:var(--bg);border:none;font-size:20px;display:grid;place-items:center;z-index:100;opacity:0;transform:translateY(20px);transition:.3s;cursor:none;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
 #btt.show{opacity:1;transform:none;}
@@ -474,6 +504,14 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
         <div class="sw-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg" alt="Photoshop" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:28px\'>🖼</span>'"></div>
         <div class="tn">Photoshop</div><div class="td">THUMBNAILS</div><div class="tcor">ADOBE</div>
       </div>
+      <div class="tc rv">
+        <div class="sw-logo"><img src="assets/filmora.png" alt="Filmora" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:28px\'>🎞</span>'"></div>
+        <div class="tn">Filmora</div><div class="td">VIDEO EDITING</div><div class="tcor">WONDERSHARE</div>
+      </div>
+      <div class="tc rv">
+        <div class="sw-logo"><img src="assets/canva.png" alt="Canva" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-size:28px\'>🎨</span>'"></div>
+        <div class="tn">Canva</div><div class="td">DESIGN & GRAPHICS</div><div class="tcor">CANVA</div>
+      </div>
     </div>
   </div>
 </section>
@@ -503,13 +541,13 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
       </p>
 
     
-      <!-- <a href="https://drive.google.com/drive/folders/14ZWxM2ogUTqzyglOwAUaIDDN0oNrOmSz?usp=sharing"
-         target="_blank"
-         class="pm-btn">
-         Watch My All Edits ↗
-      </a> -->
-      <!-- <div class="stag rv">Portfolio</div> 
-      <div class="stitle rv">FEATURED<br><span class="out">WORK</span></div> -->
+      <!-- VIDEO CAROUSEL -->
+      <div class="vc-wrap">
+        <div class="vc-track-wrap">
+          <div class="vc-track" id="vcTrack"></div>
+        </div>
+      </div>
+
        <div class="portintro"> 
         <a href="https://drive.google.com/drive/folders/14ZWxM2ogUTqzyglOwAUaIDDN0oNrOmSz?usp=sharing" target="_blank" class="pdl rv"> 
           <div class="pdl-ic">🎬</div> <div class="pdl-tx"><span>VIDEO EDITING PORTFOLIO</span><strong>Watch All My Edits</strong></div>
@@ -772,6 +810,23 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
   <div class="fcpy">© 2026 RAHUL SURU. ALL RIGHTS RESERVED.</div>
 </footer>
 
+<!-- VIDEO MODAL -->
+<div id="vcModal">
+  <div class="vcm-bg" onclick="vcClose()"></div>
+  <div class="vcm-box">
+    <div class="vcm-header">
+      <span class="vcm-title" id="vcmTitle">▶ NOW PLAYING</span>
+      <button class="vcm-close" onclick="vcClose()">✕</button>
+    </div>
+    <div class="vcm-frame">
+      <iframe id="vcmEmbed" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    <div class="vcm-footer">
+      <a id="vcmYtLink" href="#" target="_blank" class="vcm-ytbtn">▶ &nbsp;Open in Google Drive ↗</a>
+    </div>
+  </div>
+</div>
+
 <button id="btt">↑</button>
 
 <script>
@@ -888,6 +943,73 @@ function setYouTube(){
   placeholder.style.display='none';
   if(title)document.getElementById('ytTitle').textContent=title;
 }
+
+// ─── VIDEO CAROUSEL
+// To swap real videos: replace each driveId with the FILE ID from your Drive share link
+// e.g. drive.google.com/file/d/THIS_PART/view — file must be "Anyone with the link can view"
+const vcVideos = [
+  { driveId:'1EdSaRZtZl1U9YpHMVnT6HKsuAterM35q', label:'Edit 01 — Cinematic Reel',   thumb:'assets/top-6/1.jpg', orient:'portrait'  },
+  { driveId:'1Ikv-NC8LLHDLQju5bBJseemuAG4qcOsm', label:'Edit 02 — Instagram Reel',        thumb:'assets/top-6/2.jpg', orient:'portrait'  },
+  { driveId:'1ARPcodtfA09NgFNCu4aaUTcQ5onQDOq0', label:'Edit 03 — Gym Edit',        thumb:'assets/top-6/3.jpg', orient:'portrait' },
+  { driveId:'13USvkq5Yc3zMCvBo5MAGvPFTZJfmaU5D', label:'Edit 04 — Motion Graphics',     thumb:'assets/top-6/4.jpg', orient:'portrait'  },
+  { driveId:'1qG2iEWFUcx8hDtSmqR_8CatqPme_qZiz', label:'Edit 05 — Speed Ramp Edit',      thumb:'assets/top-6/5.jpg', orient:'portrait'  },
+  { driveId:'1Bv5vWy5oHyXhRP5fpTywMBNrG4Xj1qta', label:'Edit 06 — Color Grade',         thumb:'assets/top-6/6.jpg', orient:'portrait'  },
+];
+const vcTrack = document.getElementById('vcTrack');
+vcVideos.forEach((v) => {
+  const card = document.createElement('div');
+  card.className = 'vc-card';
+  card.innerHTML = `
+    <div class="vc-thumb-wrap">
+      <img class="vc-thumb" src="${v.thumb}" alt="${v.label}" loading="lazy"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="vc-thumb-fb">🎬</div>
+      <div class="vc-play-btn">&#9654;</div>
+    </div>
+    <div class="vc-label">${v.label}</div>`;
+  card.addEventListener('click', () => vcOpen(v.driveId, v.label, v.orient));
+  vcTrack.appendChild(card);
+});
+let vcIndex = 0;
+const vcVisible = () => Math.floor(vcTrack.parentElement.offsetWidth / (200 + 16));
+function vcScroll(dir) {
+  const max = Math.max(0, vcVideos.length - vcVisible());
+  vcIndex = Math.max(0, Math.min(vcIndex + dir, max));
+  vcTrack.style.transform = `translateX(-${vcIndex * (200 + 16)}px)`;
+}
+function vcOpen(driveId, label, orient) {
+  document.getElementById('vcmTitle').textContent = '▶  ' + label;
+  document.getElementById('vcmEmbed').src = `https://drive.google.com/file/d/${driveId}/preview`;
+  document.getElementById('vcmYtLink').href = `https://drive.google.com/file/d/${driveId}/view`;
+  const box = document.querySelector('.vcm-box');
+  const maxW = Math.round(window.innerWidth * 0.92);
+  const maxH = Math.round(window.innerHeight * 0.92);
+  const chrome = 90; // header + footer px
+  let boxW, boxH;
+  if (orient === 'landscape') {
+    // 16:9 — wide, shorter
+    const frameW = Math.min(maxW, 960);
+    const frameH = Math.round(frameW * 9 / 16);
+    boxW = frameW;
+    boxH = Math.min(frameH + chrome, maxH);
+  } else {
+    // 9:16 — portrait, tall and narrow
+    const frameH = Math.min(Math.round(maxH * 0.82), maxH - chrome);
+    const frameW = Math.round(frameH * 9 / 16);
+    boxW = Math.min(frameW, maxW);
+    boxH = Math.min(frameH + chrome, maxH);
+  }
+  box.style.width = boxW + 'px';
+  box.style.height = boxH + 'px';
+  document.getElementById('vcModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function vcClose() {
+  document.getElementById('vcModal').classList.remove('open');
+  document.getElementById('vcmEmbed').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape') vcClose(); });
 
 // ─── FORM
 function sf(e){e.preventDefault();const btn=e.target.querySelector('button'),orig=btn.textContent;btn.textContent='SENT ✓';btn.style.background='#00ff88';btn.style.color='#000';setTimeout(()=>{btn.textContent=orig;btn.style.background='';btn.style.color='';e.target.reset();},3000);}
