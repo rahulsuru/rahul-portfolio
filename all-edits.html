@@ -55,7 +55,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 50px;display:fl
 /* SECTION */
 .edit-section{margin-bottom:60px;}
 .section-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07);}
-.section-icon{font-size:22px;}
+.section-icon{display:flex;align-items:center;color:var(--c2);}
 .section-title{font-family:'Black Ops One',cursive;font-size:22px;letter-spacing:2px;}
 .section-count{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.3);margin-left:auto;}
 
@@ -87,13 +87,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 50px;display:fl
 .vcm-box{position:relative;z-index:1;background:#08080f;border:1px solid rgba(255,0,64,.25);border-radius:10px;overflow:hidden;box-shadow:0 0 60px rgba(255,0,64,.15);display:flex;flex-direction:column;max-height:92vh;}
 .vcm-header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.06);}
 .vcm-title{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--c2);}
-.vcm-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:22px;cursor:pointer;line-height:1;transition:.2s;}
+.vcm-close{background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;transition:.2s;display:flex;align-items:center;}
 .vcm-close:hover{color:var(--c1);}
 .vcm-frame{flex:1;min-height:0;position:relative;background:#000;display:flex;align-items:center;justify-content:center;}
 .vcm-frame iframe{width:100%;height:100%;border:none;display:block;}
-.vcm-footer{padding:12px 18px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:center;}
-.vcm-ytbtn{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--c1);text-decoration:none;padding:8px 20px;border:1px solid rgba(255,0,64,.35);transition:.3s;}
-.vcm-ytbtn:hover{background:var(--c1);color:#000;}
+.vcm-footer{padding:12px 18px;border-top:1px solid rgba(255,255,255,.06);}
+.vcm-ytbtn{display:flex;align-items:center;gap:14px;border:1px solid rgba(255,0,64,.3);padding:14px 18px;text-decoration:none;color:var(--w);background:rgba(255,0,64,.05);transition:.4s;position:relative;overflow:hidden;width:100%;}
+.vcm-ytbtn::before{content:'';position:absolute;inset:0;background:var(--c1);transform:translateX(-105%);transition:.4s;z-index:0;}
+.vcm-ytbtn:hover::before{transform:translateX(0);}
+.vcm-ytbtn:hover{color:var(--bg);}
+.vcm-ytbtn>*{position:relative;z-index:1;}
+.vcm-ytbtn-ic{flex-shrink:0;display:flex;align-items:center;}
+.vcm-ytbtn-tx span{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--c1);display:block;margin-bottom:3px;transition:.3s;}
+.vcm-ytbtn:hover .vcm-ytbtn-tx span{color:var(--bg);}
+.vcm-ytbtn-tx strong{font-family:'Black Ops One',cursive;font-size:14px;letter-spacing:2px;}
+.vcm-ytbtn-ar{margin-left:auto;flex-shrink:0;display:flex;align-items:center;}
 
 /* FOOTER */
 footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;position:relative;z-index:3;}
@@ -144,7 +152,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   <!-- 1. REELS -->
   <div class="edit-section rv">
     <div class="section-header">
-      <span class="section-icon">📱</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/></svg></span>
       <span class="section-title">REELS</span>
       <span class="section-count" id="cnt-reels"></span>
     </div>
@@ -158,7 +166,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   <!-- 2. AUTOMOTIVE REELS -->
   <div class="edit-section rv">
     <div class="section-header">
-      <span class="section-icon">🚗</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11l2.5-5h5L17 11"/><rect x="3" y="11" width="18" height="6" rx="1"/><line x1="3" y1="14" x2="21" y2="14"/><circle cx="7.5" cy="17" r="2"/><circle cx="16.5" cy="17" r="2"/></svg></span>
       <span class="section-title">AUTOMOTIVE REELS</span>
       <span class="section-count" id="cnt-auto"></span>
     </div>
@@ -172,7 +180,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   <!-- 3. EVENTS -->
   <div class="edit-section rv">
     <div class="section-header">
-      <span class="section-icon">🎉</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
       <span class="section-title">EVENTS</span>
       <span class="section-count" id="cnt-events"></span>
     </div>
@@ -186,7 +194,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   <!-- 4. FOODS -->
   <div class="edit-section rv">
     <div class="section-header">
-      <span class="section-icon">🍽️</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg></span>
       <span class="section-title">FOODS</span>
       <span class="section-count" id="cnt-foods"></span>
     </div>
@@ -200,7 +208,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   <!-- 5. HEAD TALKING REELS -->
   <div class="edit-section rv">
     <div class="section-header">
-      <span class="section-icon">🎙️</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></span>
       <span class="section-title">HEAD TALKING REELS</span>
       <span class="section-count" id="cnt-head"></span>
     </div>
@@ -214,7 +222,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   <!-- 6. AMBIANCE INTERIORS -->
   <div class="edit-section rv">
     <div class="section-header">
-      <span class="section-icon">🏠</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
       <span class="section-title">AMBIANCE INTERIORS</span>
       <span class="section-count" id="cnt-ambiance"></span>
     </div>
@@ -228,7 +236,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   <!-- 7. INTROS & REAL ESTATE -->
   <div class="edit-section rv">
     <div class="section-header">
-      <span class="section-icon">🏢</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="1"/><rect x="9" y="12" width="6" height="10"/><path d="M8 6h1M12 6h1M16 6h1M8 10h1M16 10h1"/></svg></span>
       <span class="section-title">INTROS &amp; REAL ESTATE</span>
       <span class="section-count" id="cnt-intros"></span>
     </div>
@@ -242,7 +250,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   <!-- 8. LOGOS -->
   <div class="edit-section rv">
     <div class="section-header">
-      <span class="section-icon">✏️</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></span>
       <span class="section-title">LOGOS</span>
       <span class="section-count" id="cnt-logos"></span>
     </div>
@@ -256,7 +264,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   <!-- 9. AI VIDEOS -->
   <div class="edit-section rv">
     <div class="section-header">
-      <span class="section-icon">🤖</span>
+      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span>
       <span class="section-title">AI VIDEOS</span>
       <span class="section-count" id="cnt-ai"></span>
     </div>
@@ -274,7 +282,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   <div class="fcpy">© 2026 RAHUL SURU. ALL RIGHTS RESERVED.</div>
 </footer>
 
-<button id="btt" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+<button id="btt">↑</button>
 
 <!-- VIDEO MODAL -->
 <div id="vcModal">
@@ -282,13 +290,17 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   <div class="vcm-box">
     <div class="vcm-header">
       <span class="vcm-title" id="vcmTitle">▶ NOW PLAYING</span>
-      <button class="vcm-close" onclick="vcClose()">✕</button>
+      <button class="vcm-close" onclick="vcClose()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="vcm-frame">
       <iframe id="vcmEmbed" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
     <div class="vcm-footer">
-      <a id="vcmYtLink" href="#" target="_blank" class="vcm-ytbtn">▶ &nbsp;Open in Google Drive ↗</a>
+      <a id="vcmYtLink" href="#" target="_blank" class="vcm-ytbtn">
+        <div class="vcm-ytbtn-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="7" y1="3" x2="6" y2="9"/><line x1="13" y1="3" x2="12" y2="9"/><line x1="19" y1="3" x2="18" y2="9"/></svg></div>
+        <div class="vcm-ytbtn-tx"><span>VIEW ORIGINAL</span><strong>Open in Google Drive</strong></div>
+        <div class="vcm-ytbtn-ar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+      </a>
     </div>
   </div>
 </div>
@@ -310,13 +322,14 @@ document.querySelectorAll('a,button,.vc-card').forEach(el => {
   el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
 });
 
-// ─── PROGRESS BAR
+// ─── PROGRESS BAR + BACK TO TOP
+const btt = document.getElementById('btt');
+btt.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 window.addEventListener('scroll', () => {
-  const p = document.getElementById('prog');
-  const s = document.documentElement.scrollTop;
+  const s = window.scrollY;
   const h = document.documentElement.scrollHeight - window.innerHeight;
-  p.style.width = (s / h * 100) + '%';
-  document.getElementById('btt').classList.toggle('show', s > 300);
+  document.getElementById('prog').style.width = (s / h * 100) + '%';
+  btt.classList.toggle('show', s > 300);
 });
 
 // ─── REVEAL
@@ -467,7 +480,7 @@ allSections.forEach(({ trackId, cntId, data }) => {
       <div class="vc-thumb-wrap">
         <img class="vc-thumb" src="${v.thumb}" alt="${v.label}" loading="lazy"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="vc-thumb-fb">🎬</div>
+        <div class="vc-thumb-fb"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
         <div class="vc-play-btn">&#9654;</div>
       </div>
       <div class="vc-label">${v.label}</div>`;
