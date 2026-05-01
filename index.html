@@ -193,16 +193,16 @@ section{padding:110px 50px;position:relative;}
 
 /* PORTFOLIO */
 #portfolio{background:#01010a;}
-.portintro{display:flex;flex-direction:column;align-items:stretch;gap:14px;}
-.pdl{display:flex;align-items:center;gap:18px;border:1px solid rgba(255,0,64,.3);padding:28px 28px;text-decoration:none;color:var(--w);background:rgba(255,0,64,.05);transition:.4s;position:relative;overflow:hidden;flex:1;min-width:240px;}
+.portintro{display:flex;flex-direction:column;align-items:stretch;gap:14px;min-width:0;}
+.pdl{display:flex;align-items:center;gap:18px;border:1px solid rgba(255,0,64,.3);padding:20px 28px;text-decoration:none;color:var(--w);background:rgba(255,0,64,.05);transition:.4s;position:relative;overflow:hidden;flex:1;min-width:240px;}
 .pdl::before{content:'';position:absolute;inset:0;background:var(--c1);transform:translateX(-105%);transition:.4s;z-index:0;}
 .pdl:hover::before{transform:translateX(0);}
 .pdl:hover{color:var(--bg);}
 .pdl>*{position:relative;z-index:1;}
 .pdl-ic{font-size:30px;flex-shrink:0;display:flex;align-items:center;}
-.pdl-tx span{font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--c1);display:block;margin-bottom:4px;transition:.3s;}
+.pdl-tx span{font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--c1);display:block;margin-bottom:4px;transition:.3s;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .pdl:hover .pdl-tx span{color:var(--bg);}
-.pdl-tx strong{font-size:18px;font-weight:700;}
+.pdl-tx strong{font-size:18px;font-weight:700;overflow:hidden;text-overflow:ellipsis;display:block;word-wrap:break-word;overflow-wrap:break-word;}
 .pdl-ar{margin-left:auto;font-size:30px;flex-shrink:0;display:flex;align-items:center;}
 .pdl-vm{border-color:rgba(0,255,225,.3);background:rgba(0,255,225,.05);}
 .pdl-vm::before{background:var(--c2);}
@@ -327,6 +327,12 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
 .vc-card:hover .vc-play-btn{opacity:1;background:rgba(255,0,64,.22);border-color:var(--c1);transform:translate(-50%,-50%) scale(1.12);box-shadow:0 0 18px rgba(255,0,64,.35);}
 .vc-label{padding:9px 11px;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:1px;color:rgba(255,255,255,.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-top:1px solid rgba(255,255,255,.06);}
 
+/* CAROUSEL NAV */
+.vc-nav{display:flex;gap:6px;margin-top:10px;justify-content:flex-end;}
+.vcn-btn{width:32px;height:32px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.45);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.25s;border-radius:4px;flex-shrink:0;padding:0;}
+.vcn-btn:hover:not(:disabled){border-color:var(--c1);color:var(--c1);background:rgba(255,0,64,.06);}
+.vcn-btn:disabled{opacity:.2;pointer-events:none;}
+
 /* VIDEO MODAL */
 #vcModal{display:none;position:fixed;inset:0;z-index:9000;align-items:center;justify-content:center;}
 #vcModal.open{display:flex;}
@@ -383,11 +389,24 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
   #hero{padding:110px 20px 70px;}
   footer{padding:22px 20px;}
   .svcg,.testg{grid-template-columns:1fr;}
+  .tgrid{grid-template-columns:1fr;}
   .hbar,.hbar2{display:none;}
   .hname{font-size:70px;}
   .cbig{font-size:52px;}
   .hstats{flex-wrap:wrap;}
   .egrid{grid-template-columns:1fr;}
+  #about .alay > .rvl{display:none;}
+
+  /* Video Modal Mobile Styles */
+  .vcm-ytbtn{padding:10px 12px;gap:8px;flex-wrap:nowrap;}
+  .vcm-ytbtn-ic{width:24px;height:24px;}
+  .vcm-ytbtn-ic svg{width:16px;height:16px;}
+  .vcm-ytbtn-tx{flex:1;min-width:0;}
+  .vcm-ytbtn-tx span{font-size:8px;letter-spacing:1px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .vcm-ytbtn-tx strong{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .vcm-ytbtn-ar{display:none;}
+  .vcm-box{max-height:90vh;}
+  .vcm-frame{display:flex;align-items:center;justify-content:center;}
 }
 </style>
 </head>
@@ -565,35 +584,30 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
           <div class="vc-track" id="vcTrack"></div>
         </div>
       </div>
+      <div class="vc-nav">
+        <button class="vcn-btn" id="vcPrev" aria-label="Previous">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="vcn-btn" id="vcNext" aria-label="Next">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
 
        <div class="portintro">
-        <a href="all-edits.html" class="pdl pdl-vm rv">
-          <div class="pdl-ic">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/><polyline points="12 2 2 7 12 12 22 7 12 2"/>
-            </svg>
-          </div>
-          <div class="pdl-tx"><span class="pdl-vm-lbl">ALL CATEGORIES</span><strong>View More Edits</strong></div>
-          <div class="pdl-ar">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </div>
-        </a>
-        <a href="https://drive.google.com/drive/folders/14ZWxM2ogUTqzyglOwAUaIDDN0oNrOmSz?usp=sharing" target="_blank" class="pdl rv">
-          <div class="pdl-ic">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/>
-              <line x1="7" y1="3" x2="6" y2="9"/><line x1="13" y1="3" x2="12" y2="9"/><line x1="19" y1="3" x2="18" y2="9"/>
-            </svg>
-          </div>
-          <div class="pdl-tx"><span>VIDEO EDITING PORTFOLIO</span><strong>Watch All My Edits</strong></div>
-          <div class="pdl-ar">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
-            </svg>
-          </div>
-        </a> </div>
+         <a href="all-edits.html" class="pdl pdl-vm rv">
+           <div class="pdl-ic">
+             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+               <polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/><polyline points="12 2 2 7 12 12 22 7 12 2"/>
+             </svg>
+           </div>
+           <div class="pdl-tx"><span class="pdl-vm-lbl">ALL CATEGORIES</span><strong>View More Edits</strong></div>
+           <div class="pdl-ar">
+             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+               <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+             </svg>
+           </div>
+         </a>
+       </div>
     </div>
 
 
@@ -606,7 +620,7 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
 .portfolio-main{
   position:relative;
   display:grid;
-  
+  grid-template-columns:1fr;
   gap:40px;
   align-items:center;
   padding:45px;
@@ -615,6 +629,7 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
   border-radius:28px;
   background:linear-gradient(135deg,#07070f,#11111d);
   overflow:hidden;
+  min-width:0;
 }
 
 
@@ -634,23 +649,75 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
   font-size:12px;
   letter-spacing:3px;
   color:#00ffe1;
-  margin-bottom:18px;
+  margin:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100%;
 }
 
+.pm-left{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  text-align:left;
+  gap:16px;
+  overflow:hidden;
+  min-width:0;
+}
+
+.pm-left > *{width:100%;overflow-wrap:break-word;word-wrap:break-word;word-break:break-word;}
+
 .pm-left h2{
-  font-size:48px;
-  line-height:1.05;
-  margin-bottom:18px;
+  font-size:clamp(32px,5vw,48px);
+  line-height:1.2;
+  margin:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .pm-left h2 span{
   color:#ff0040;
+  display:block;
 }
 
 .pm-left p{
   color:rgba(255,255,255,.65);
   line-height:1.8;
-  margin-bottom:28px;
+  margin:0;
+  width:100%;
+  overflow:hidden;
+  font-size:clamp(13px,2vw,16px);
+}
+
+.portfolio-main .vc-wrap{
+  margin:0;
+}
+
+.portfolio-main .vc-track-wrap{
+  padding:8px 0 12px;
+}
+
+.portfolio-main .vc-card{
+  flex:0 0 210px;
+}
+
+.portfolio-main .vc-track-wrap{
+  padding:8px 0 12px;
+  scroll-snap-type:x mandatory;
+  scroll-padding-left:0;
+}
+
+.portfolio-main .vc-card{
+  scroll-snap-align:start;
+}
+
+.portfolio-main .vc-nav{
+  display:none;
+}
+
+.portfolio-main .portintro{
+  margin-top:2px;
 }
 
 .pm-stats{
@@ -717,18 +784,44 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
   }
 }
 
-@media(max-width:900px){
+@media(max-width:1100px){
   .portfolio-main{
     grid-template-columns:1fr;
-    text-align:center;
+    padding:32px 24px;
+  }
+
+  .pm-left{
+    align-items:stretch;
+    text-align:left;
+    gap:14px;
   }
 
   .pm-left p{
-    margin:auto auto 28px;
+    margin:0;
+    width:100%;
+    overflow-wrap:break-word;
+    word-wrap:break-word;
   }
 
   .pm-stats{
     justify-content:center;
+  }
+
+  .portfolio-main .vc-wrap{
+    margin:0;
+  }
+  .portfolio-main .vc-nav{justify-content:flex-start;}
+
+  .portfolio-main .portintro{
+    width:100%;
+    display:flex;
+    justify-content:flex-start;
+  }
+
+  .portfolio-main .pdl{
+    width:100%;
+    max-width:100%;
+    overflow-wrap:break-word;
   }
 
   .pm-left h2{
@@ -740,6 +833,27 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
     height:180px;
     font-size:60px;
   }
+}
+@media(max-width:768px){
+  .portfolio-main{
+    padding:24px 18px;
+    gap:20px;
+    border-radius:18px;
+  }
+
+  .pm-left h2{
+    font-size:28px;
+  }
+
+  .pm-left p{
+    font-size:14px;
+  }
+
+  .portfolio-main .vc-wrap{margin:0;}
+  .portfolio-main .vc-track{gap:12px;}
+  .portfolio-main .vc-card{flex:0 0 180px;}
+  .portfolio-main .vc-nav{justify-content:flex-start;}
+  .portfolio-main .pdl{max-width:100%;overflow-wrap:break-word;}
 }
 </style>
 
@@ -1001,6 +1115,10 @@ const vcVideos = [
   { driveId:'1Bv5vWy5oHyXhRP5fpTywMBNrG4Xj1qta', label:'Edit 06 — Color Grade',         thumb:'assets/top-6/6.jpg', orient:'portrait'  },
 ];
 const vcTrack = document.getElementById('vcTrack');
+const vcWrapper = vcTrack.parentElement;
+const vcPrev = document.getElementById('vcPrev');
+const vcNext = document.getElementById('vcNext');
+const CARD_W = 200 + 16;
 vcVideos.forEach((v) => {
   const card = document.createElement('div');
   card.className = 'vc-card';
@@ -1015,13 +1133,26 @@ vcVideos.forEach((v) => {
   card.addEventListener('click', () => vcOpen(v.driveId, v.label, v.orient));
   vcTrack.appendChild(card);
 });
-let vcIndex = 0;
-const vcVisible = () => Math.floor(vcTrack.parentElement.offsetWidth / (200 + 16));
-function vcScroll(dir) {
-  const max = Math.max(0, vcVideos.length - vcVisible());
-  vcIndex = Math.max(0, Math.min(vcIndex + dir, max));
-  vcTrack.style.transform = `translateX(-${vcIndex * (200 + 16)}px)`;
-}
+const getMax = () => {
+  const visible = Math.floor(vcWrapper.offsetWidth / CARD_W);
+  return Math.max(0, vcVideos.length - visible);
+};
+const refresh = () => {
+  const max = getMax();
+  vcPrev.disabled = vcWrapper.scrollLeft <= 0;
+  vcNext.disabled = vcWrapper.scrollLeft >= max * CARD_W - 1;
+};
+vcPrev.addEventListener('click', () => {
+  vcWrapper.scrollBy({ left: -CARD_W * 2, behavior: 'smooth' });
+  setTimeout(refresh, 320);
+});
+vcNext.addEventListener('click', () => {
+  vcWrapper.scrollBy({ left: CARD_W * 2, behavior: 'smooth' });
+  setTimeout(refresh, 320);
+});
+vcWrapper.addEventListener('scroll', refresh, { passive: true });
+window.addEventListener('resize', () => setTimeout(refresh, 120), { passive: true });
+setTimeout(refresh, 100);
 function vcOpen(driveId, label, orient) {
   document.getElementById('vcmTitle').textContent = '▶  ' + label;
   document.getElementById('vcmEmbed').src = `https://drive.google.com/file/d/${driveId}/preview`;

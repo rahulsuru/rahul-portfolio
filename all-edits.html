@@ -45,18 +45,32 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 50px;display:fl
 /* PAGE HEADER */
 .page-header{padding:140px 60px 60px;position:relative;z-index:3;}
 .page-pre{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--c1);margin-bottom:14px;}
-.page-title{font-family:'Black Ops One',cursive;font-size:clamp(40px,7vw,80px);line-height:1;letter-spacing:2px;}
+.page-title{font-family:'Black Ops One',cursive;font-size:clamp(40px,7vw,80px);line-height:1;letter-spacing:2px;overflow-wrap:break-word;word-wrap:break-word;}
 .page-title span{color:var(--c1);}
-.page-sub{font-size:16px;color:rgba(255,255,255,.5);margin-top:16px;font-family:'Share Tech Mono',monospace;letter-spacing:1px;}
+.page-sub{font-size:16px;color:rgba(255,255,255,.5);margin-top:16px;font-family:'Share Tech Mono',monospace;letter-spacing:1px;overflow-wrap:break-word;word-wrap:break-word;}
 
 /* SECTIONS WRAPPER */
 .all-sections{padding:0 60px 80px;position:relative;z-index:3;}
+
+/* END CTA */
+.end-cta{padding:0 60px 80px;position:relative;z-index:3;}
+.end-cta .pdl{width:100%;}
+.pdl{display:flex;align-items:center;gap:18px;border:1px solid rgba(255,0,64,.3);padding:20px 28px;text-decoration:none;color:var(--w);background:rgba(255,0,64,.05);transition:.4s;position:relative;overflow:hidden;min-width:0;}
+.pdl::before{content:'';position:absolute;inset:0;background:var(--c1);transform:translateX(-105%);transition:.4s;z-index:0;}
+.pdl:hover::before{transform:translateX(0);}
+.pdl:hover{color:var(--bg);}
+.pdl>*{position:relative;z-index:1;}
+.pdl-ic{font-size:30px;flex-shrink:0;display:flex;align-items:center;}
+.pdl-tx span{font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--c1);display:block;margin-bottom:4px;transition:.3s;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pdl:hover .pdl-tx span{color:var(--bg);}
+.pdl-tx strong{font-size:18px;font-weight:700;overflow:hidden;text-overflow:ellipsis;display:block;word-wrap:break-word;overflow-wrap:break-word;}
+.pdl-ar{margin-left:auto;font-size:30px;flex-shrink:0;display:flex;align-items:center;}
 
 /* SECTION */
 .edit-section{margin-bottom:60px;}
 .section-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07);}
 .section-icon{display:flex;align-items:center;color:var(--c2);}
-.section-title{font-family:'Black Ops One',cursive;font-size:22px;letter-spacing:2px;}
+.section-title{font-family:'Black Ops One',cursive;font-size:22px;letter-spacing:2px;overflow-wrap:break-word;word-wrap:break-word;min-width:0;}
 .section-count{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.3);margin-left:auto;}
 
 /* VIDEO CAROUSEL (same as main) */
@@ -123,7 +137,19 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   nav{padding:18px 20px;}
   .page-header{padding:120px 20px 40px;}
   .all-sections{padding:0 20px 60px;}
+  .end-cta{padding:0 20px 60px;}
   footer{padding:24px 20px;}
+
+  /* Video Modal Mobile Styles */
+  .vcm-ytbtn{padding:10px 12px;gap:8px;flex-wrap:nowrap;}
+  .vcm-ytbtn-ic{width:24px;height:24px;}
+  .vcm-ytbtn-ic svg{width:16px;height:16px;}
+  .vcm-ytbtn-tx{flex:1;min-width:0;}
+  .vcm-ytbtn-tx span{font-size:8px;letter-spacing:1px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .vcm-ytbtn-tx strong{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .vcm-ytbtn-ar{display:none;}
+  .vcm-box{max-height:90vh;}
+  .vcm-frame{display:flex;align-items:center;justify-content:center;}
 }
 </style>
 </head>
@@ -276,6 +302,23 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
   </div>
 
 </div><!-- /all-sections -->
+
+<div class="end-cta">
+  <a href="https://drive.google.com/drive/folders/14ZWxM2ogUTqzyglOwAUaIDDN0oNrOmSz?usp=sharing" target="_blank" class="pdl rv">
+    <div class="pdl-ic">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/>
+        <line x1="7" y1="3" x2="6" y2="9"/><line x1="13" y1="3" x2="12" y2="9"/><line x1="19" y1="3" x2="18" y2="9"/>
+      </svg>
+    </div>
+    <div class="pdl-tx"><span>VIDEO EDITING PORTFOLIO</span><strong>Watch All My Edits</strong></div>
+    <div class="pdl-ar">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+      </svg>
+    </div>
+  </a>
+</div>
 
 <footer>
   <div class="fl">RAHUL <span>SURU</span></div>
