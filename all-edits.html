@@ -104,7 +104,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 50px;display:fl
 .vcm-close{background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;transition:.2s;display:flex;align-items:center;}
 .vcm-close:hover{color:var(--c1);}
 .vcm-frame{flex:1;min-height:0;position:relative;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-.vcm-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block;}
+.vcm-frame video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;background:#000;}
 .vcm-footer{padding:12px 18px;border-top:1px solid rgba(255,255,255,.06);}
 .vcm-ytbtn{display:flex;align-items:center;gap:14px;border:1px solid rgba(255,0,64,.3);padding:14px 18px;text-decoration:none;color:var(--w);background:rgba(255,0,64,.05);transition:.4s;position:relative;overflow:hidden;width:100%;}
 .vcm-ytbtn::before{content:'';position:absolute;inset:0;background:var(--c1);transform:translateX(-105%);transition:.4s;z-index:0;}
@@ -322,12 +322,12 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
       <button class="vcm-close" onclick="vcClose()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="vcm-frame">
-      <iframe id="vcmEmbed" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <video id="vcmVideo" controls playsinline preload="metadata"></video>
     </div>
     <div class="vcm-footer">
       <a id="vcmYtLink" href="#" target="_blank" class="vcm-ytbtn">
         <div class="vcm-ytbtn-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="7" y1="3" x2="6" y2="9"/><line x1="13" y1="3" x2="12" y2="9"/><line x1="19" y1="3" x2="18" y2="9"/></svg></div>
-        <div class="vcm-ytbtn-tx"><span>VIEW ORIGINAL</span><strong>Open in Google Drive</strong></div>
+        <div class="vcm-ytbtn-tx"><span>VIEW ORIGINAL</span><strong>Open Original</strong></div>
         <div class="vcm-ytbtn-ar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
       </a>
     </div>
@@ -368,108 +368,112 @@ const rvObs = new IntersectionObserver(entries => {
 document.querySelectorAll('.rv').forEach(el => rvObs.observe(el));
 
 // ─── VIDEO DATA
-// Replace each driveId with the FILE ID from your Google Drive share link:
-// drive.google.com/file/d/THIS_PART/view  — file must be "Anyone with the link can view"
+const R2_BASE = 'https://pub-58088dda9e614bf3b6c44e57089bcd95.r2.dev';
 const T = 'assets/all%20thumbnails/';
 
+function r2VideoUrl(fileName) {
+  return `${R2_BASE}/${encodeURIComponent(fileName)}`;
+}
+
 const reelsVideos = [
-  { driveId:'1l8PkUN95Eaae2ZzzGcHArLA5BnxxBJTP', label:'Reel 01', thumb:T+'e1.png', orient:'portrait' },
-  { driveId:'1F7I62gPHLl1KbM_RmgGYroIBxW5C2kZZ', label:'Reel 02', thumb:T+'e2.png', orient:'portrait' },
-  { driveId:'1zY5cpQMXUVIGAaOdIUb05P0Ijf4ONW4z', label:'Reel 03', thumb:T+'e3.png', orient:'portrait' },
-  { driveId:'1OPd1LJv3VaVBa_m68diseBahfUu6EePX', label:'Reel 04', thumb:T+'e4.png', orient:'portrait' },
-  { driveId:'1XHm4Q9t6fgi1QEQ2kV15B5r-d7kRBpmr', label:'Reel 05',  thumb:T+'R1.png',   orient:'portrait' },
-  { driveId:'1C6NiMbY-k8yxhTwJkk34PQndpiJsHqAC', label:'Reel 06',  thumb:T+'R2.png',   orient:'portrait' },
-  { driveId:'1Klzr2UMcG2BGuQjFHl2gMbPVXNXcPjec', label:'Reel 07',  thumb:T+'R3.png',   orient:'portrait' },
-  { driveId:'1xRNkLO6B2DqClWEu9UtDi5TsYQAhiKAA', label:'Reel 08',  thumb:T+'R4.png',   orient:'portrait' },
-  { driveId:'1MFHgApXsld3viIuFdXKo6hF_WSRkqhlh', label:'Reel 09',  thumb:T+'R5.png',   orient:'portrait' },
-  { driveId:'1tiaaAshXrMty2pJoYRLY0zwbeKSjQ7S2', label:'Reel 10',  thumb:T+'R6.png',   orient:'portrait' },
-  { driveId:'14Ec9PcoltRtO2VdXhxurk4qlb7SS2Hlp', label:'Reel 11',  thumb:T+'R7.png',   orient:'portrait' },
-  { driveId:'1c7bR4iI9VOGqms6-3sCxhRoXGHugx_jD', label:'Reel 12',  thumb:T+'R8.png',   orient:'portrait' },
-  { driveId:'1MM0IMVzwAjNwQ8nvz3SeejBVEarCwipa', label:'Reel 13',  thumb:T+'R9.png',   orient:'portrait' },
-  { driveId:'1OL7hJgHf6eFjbFobvoPhcb3mTltmGp6B', label:'Reel 14',  thumb:T+'R10.png',  orient:'portrait' },
-  { driveId:'1pIfDwTP7031cVcaGvbLGgThatqlM2CtS', label:'Reel 15',  thumb:T+'R11.png',  orient:'portrait' },
-  { driveId:'1w5wtrf3ai86Exogl4hJ-WSqXDBHGOPqx', label:'Reel 16',  thumb:T+'R12.png',  orient:'portrait' },
-  { driveId:'1ulmtXfvWplCzfnS6Ec4yZPqspk33MVsc', label:'Reel 17',  thumb:T+'R13.png',  orient:'portrait' },
-  { driveId:'1kpLF9ljLQlwIrX02V8NSw1qj43rV5Lau', label:'Reel 18',  thumb:T+'R14.png',  orient:'portrait' },
-  { driveId:'1Z0UVALW6CxR3JF9L36Tsx_qzbpiszTGU', label:'Reel 19',  thumb:T+'R15.png',  orient:'portrait' },
-  { driveId:'1TtqCKIgXPCsYPSq7TxEnFgj-D8skZmDp', label:'Reel 20',  thumb:T+'R16.png',  orient:'portrait' },
-  { driveId:'1tOBaBdXTzEnVuvc_d3KxmV2XqNQ2IUtI', label:'Reel 21',  thumb:T+'R17.png',  orient:'portrait' },
+  { file:'e1.mp4',    label:'Reel 01', thumb:T+'e1.png',  orient:'portrait' },
+  { file:'e2.mp4',    label:'Reel 02', thumb:T+'e2.png',  orient:'portrait' },
+  { file:'e3.mp4',    label:'Reel 03', thumb:T+'e3.png',  orient:'portrait' },
+  { file:'e4.mp4',    label:'Reel 04', thumb:T+'e4.png',  orient:'portrait' },
+  { file:'r1.mp4',    label:'Reel 05', thumb:T+'R1.png',  orient:'portrait' },
+  { file:'r2.mp4',    label:'Reel 06', thumb:T+'R2.png',  orient:'portrait' },
+  { file:'r3.mp4',    label:'Reel 07', thumb:T+'R3.png',  orient:'portrait' },
+  { file:'r4.mp4',    label:'Reel 08', thumb:T+'R4.png',  orient:'portrait' },
+  { file:'r5.mp4',    label:'Reel 09', thumb:T+'R5.png',  orient:'portrait' },
+  { file:'r6.mov',    label:'Reel 10', thumb:T+'R6.png',  orient:'portrait' },
+  { file:'r7.mp4',    label:'Reel 11', thumb:T+'R7.png',  orient:'portrait' },
+  { file:'r8.mp4',    label:'Reel 12', thumb:T+'R8.png',  orient:'portrait' },
+  { file:'r9.mp4',    label:'Reel 13', thumb:T+'R9.png',  orient:'portrait' },
+  { file:'r10.mp4',   label:'Reel 14', thumb:T+'R10.png', orient:'portrait' },
+  { file:'r11.mp4',   label:'Reel 15', thumb:T+'R11.png', orient:'portrait' },
+  { file:'r12.mp4',   label:'Reel 16', thumb:T+'R12.png', orient:'portrait' },
+  { file:'r13.mp4',   label:'Reel 17', thumb:T+'R13.png', orient:'portrait' },
+  { file:'r14.mp4',   label:'Reel 18', thumb:T+'R14.png', orient:'portrait' },
+  { file:'r15.mp4',   label:'Reel 19', thumb:T+'R15.png', orient:'portrait' },
+  { file:'r16.mp4',   label:'Reel 20', thumb:T+'R16.png', orient:'portrait' },
+  { file:'r17.mp4',   label:'Reel 21', thumb:T+'R17.png', orient:'portrait' },
+  { file:'r18.mov',   label:'Reel 22', thumb:T+'R18.png', orient:'portrait' },
 ];
 
 const autoVideos = [
-  { driveId:'1LoY5R9DBuKSIcO8DxEkBqKyfKSah30A4', label:'Automotive 01', thumb:T+'auto1.png', orient:'portrait' },
-  { driveId:'1wzoJRmgI4d-FBGp1_2EBqhnURWGKySqq', label:'Automotive 02', thumb:T+'auto2.png', orient:'portrait' },
-  { driveId:'1uljsuQHZjcP8B0taBeaCi565FAAK4Hc3', label:'Automotive 03', thumb:T+'auto3.png', orient:'portrait' },
-  { driveId:'1I8Z_7ckBoc5zNKMMp7Dr57Z4yJwpctmF', label:'Automotive 04', thumb:T+'auto4.png', orient:'portrait' },
-  { driveId:'1GpfOkmaRM2PYw7d-gueKH8w6kAka8XrR', label:'Automotive 05', thumb:T+'auto5.png', orient:'portrait' },
-  { driveId:'1KIJA9ZsJU042f7XsLmGzCWvAboqMTFP-', label:'Automotive 06', thumb:T+'auto6.png', orient:'portrait' },
-  { driveId:'1ksKXO_pYY6tmc7nm_S_TP6eEYTOl02WY', label:'Automotive 07', thumb:T+'auto7.png', orient:'portrait' },
+  { file:'auto1.mp4', label:'Automotive 01', thumb:T+'auto1.png', orient:'portrait' },
+  { file:'auto2.mp4', label:'Automotive 02', thumb:T+'auto2.png', orient:'portrait' },
+  { file:'auto3.mov', label:'Automotive 03', thumb:T+'auto3.png', orient:'portrait' },
+  { file:'auto4.mov', label:'Automotive 04', thumb:T+'auto4.png', orient:'portrait' },
+  { file:'auto5.mov', label:'Automotive 05', thumb:T+'auto5.png', orient:'portrait' },
+  { file:'auto6.mp4', label:'Automotive 06', thumb:T+'auto6.png', orient:'portrait' },
+  { file:'auto7.mov', label:'Automotive 07', thumb:T+'auto7.png', orient:'portrait' },
 ];
 
 const foodsVideos = [
-  { driveId:'17p9cfikTVZdYb2rJSRz-BE8eN6TCHNM5', label:'Food 01',  thumb:T+'F1.png',  orient:'portrait' },
-  { driveId:'1WlLAXhWI8aC6lmroU4LoIMZTPS-VWfbW', label:'Food 02',  thumb:T+'F2.png',  orient:'portrait' },
-  { driveId:'1Z2PBIIBhPRcSMoA7uXajIRvc3M_SR9zF', label:'Food 03',  thumb:T+'F3.png',  orient:'portrait' },
-  { driveId:'10tCIMoEViURmfQZLxHxr0igP2qqTYbgx', label:'Food 04',  thumb:T+'F4.png',  orient:'portrait' },
-  { driveId:'1vkTaoQmf1H9GW2UOGX9BgcSXv0v53h4C', label:'Food 05',  thumb:T+'F5.png',  orient:'portrait' },
-  { driveId:'1CRczLxlxsb-em6Ew8YNmain9QTgb39df', label:'Food 06',  thumb:T+'F6.png',  orient:'portrait' },
-  { driveId:'1nOQhnYUN3_749WawJ0RTNjZYoqiG-TJO', label:'Food 07',  thumb:T+'F7.png',  orient:'portrait' },
-  { driveId:'1GHc68sZxNx1BmBDIl3QSFiNynWsvzxxH', label:'Food 08',  thumb:T+'F8.png',  orient:'portrait' },
-  { driveId:'19VRh1Sg7WayIrQRs6I8Kv1o2p_qqMGw9', label:'Food 09',  thumb:T+'F9.png',  orient:'portrait' },
-  { driveId:'1UayjpFSXuraDhq4GJmh2J4MQVIOV5TNQ', label:'Food 10',  thumb:T+'F10.png', orient:'portrait' },
-  { driveId:'1dg_Qm46MB7bv6EwkEhwPXagwMeTs5FXf', label:'Food 11',  thumb:T+'F11.png', orient:'portrait' },
+  { file:'f1.mp4',  label:'Food 01', thumb:T+'F1.png',  orient:'portrait' },
+  { file:'f2.mp4',  label:'Food 02', thumb:T+'F2.png',  orient:'portrait' },
+  { file:'f3.mp4',  label:'Food 03', thumb:T+'F3.png',  orient:'portrait' },
+  { file:'f4.mp4',  label:'Food 04', thumb:T+'F4.png',  orient:'portrait' },
+  { file:'f5.mp4',  label:'Food 05', thumb:T+'F5.png',  orient:'portrait' },
+  { file:'f6.mp4',  label:'Food 06', thumb:T+'F6.png',  orient:'portrait' },
+  { file:'f7.mp4',  label:'Food 07', thumb:T+'F7.png',  orient:'portrait' },
+  { file:'f8.mp4',  label:'Food 08', thumb:T+'F8.png',  orient:'portrait' },
+  { file:'f9.mp4',  label:'Food 09', thumb:T+'F9.png',  orient:'portrait' },
+  { file:'f10.mp4', label:'Food 10', thumb:T+'F10.png', orient:'portrait' },
+  { file:'f11.mp4', label:'Food 11', thumb:T+'F11.png', orient:'portrait' },
 ];
 
 const headVideos = [
-  { driveId:'1r_BSTI-E3AQIUJ-YeKghNVd_wZ6XdiBz', label:'Talking 01', thumb:T+'H1.png',  orient:'portrait' },
-  { driveId:'1Bc1wUY8bjQCuNH8ntAqwl-W2Pxla6GR-', label:'Talking 02', thumb:T+'H2.png',  orient:'portrait' },
-  { driveId:'1mpOCwOUnW8ORb3v5_T1A0o_S20nsWGAQ', label:'Talking 03', thumb:T+'H3.png',  orient:'portrait' },
-  { driveId:'1vUwdhKWFxHX3ZM-eP8u5hc9ifDV-QnOX', label:'Talking 04', thumb:T+'HX.jpeg',  orient:'portrait' },
-  { driveId:'1dGBh_1nFxk_Q-OLijwKZCymBvlbPyefL', label:'Talking 05', thumb:T+'H4.png',  orient:'landscape' },
-  { driveId:'1-NJkptOOqzQyw78Jrh_4oME69wKeLbsd', label:'Talking 06', thumb:T+'H5.png',  orient:'portrait' },
-  { driveId:'1OuM6ATnjRQIu-nLn_5_uCLRdKhd0T7r_', label:'Talking 07', thumb:T+'H6.png',  orient:'portrait' },
-  { driveId:'1lakac4DK4SJFxfKVldGmOVFORkZOJJUc', label:'Talking 08', thumb:T+'H7.png',  orient:'portrait' },
-  { driveId:'1S8Ui5AXqi-TB-NQ8a3elb4_co0byMZ7g', label:'Talking 09', thumb:T+'H8.png',  orient:'portrait' },
-  { driveId:'13DTY06zwyyKibiNkLuyMp0qaVF2P0taZ', label:'Talking 10', thumb:T+'H9.png',  orient:'portrait' },
-  { driveId:'1tZgR2PAuX3dGRoTE4zkMzpT6IGaphXAr', label:'Talking 11', thumb:T+'H10.png', orient:'portrait' },
-  { driveId:'1107JecIlzonc1BrOUgv-znhIbCZGsR9I', label:'Talking 12', thumb:T+'H11.png', orient:'portrait' },
-  { driveId:'1LCOPvz1XFdQEvrekl4usZU_EltYbi2di', label:'Talking 13', thumb:T+'H12.png', orient:'portrait' },
-  { driveId:'1yt4h8V8jY9A-E2365tC-aHrQqAkU2F9Y', label:'Talking 14', thumb:T+'H13.png', orient:'portrait' },
+  { file:'h1.mov',   label:'Talking 01', thumb:T+'H1.png',  orient:'portrait' },
+  { file:'h2.mp4',   label:'Talking 02', thumb:T+'H2.png',  orient:'portrait' },
+  { file:'h3_1.mp4', label:'Talking 03', thumb:T+'HX.jpeg',  orient:'portrait' },
+  { file:'h3.mp4', label:'Talking 04', thumb:T+'H3.png',  orient:'portrait' },
+  { file:'h4.mp4',   label:'Talking 05', thumb:T+'H4.png',  orient:'portrait' },
+  { file:'h5.mp4',   label:'Talking 06', thumb:T+'H5.png',  orient:'portrait' },
+  { file:'h6.mp4',   label:'Talking 07', thumb:T+'H6.png',  orient:'portrait' },
+  { file:'h7.mp4',   label:'Talking 08', thumb:T+'H7.png',  orient:'portrait' },
+  { file:'h8.mp4',   label:'Talking 09', thumb:T+'H8.png',  orient:'portrait' },
+  { file:'h9.mp4',   label:'Talking 10', thumb:T+'H9.png',  orient:'portrait' },
+  { file:'h10.mp4',  label:'Talking 11', thumb:T+'H10.png', orient:'portrait' },
+  { file:'h11.mp4',  label:'Talking 12', thumb:T+'H11.png', orient:'portrait' },
+  { file:'h12.mp4',  label:'Talking 13', thumb:T+'H12.png', orient:'portrait' },
+  { file:'h13.mp4',  label:'Talking 14', thumb:T+'H13.png', orient:'portrait' },
 ];
 
 const ambianceVideos = [
-  { driveId:'1Zyz3KDGx_E2-53uP-yKzX7YC-MRS_OSO', label:'Interior 01', thumb:T+'amb1.jpg', orient:'portrait' },
-  { driveId:'143dAkcPfq1GaXaEiXBzrsEvt6KX14I6_', label:'Interior 02', thumb:T+'amb2.png', orient:'portrait' },
-  { driveId:'1unzayFBwuxES_CCec8bU4excTr-WLJjz', label:'Interior 03', thumb:T+'amb3.png', orient:'portrait' },
-  { driveId:'1q-qRqM3V-kYdi5XmQdTw3vVUAH13qEEg', label:'Interior 04', thumb:T+'amb4.png', orient:'portrait' },
-  { driveId:'1AXkfvZuJgDhj1rsHlq48y8zxUIGcXO6T', label:'Interior 05', thumb:T+'amb5.png', orient:'portrait' },
-  { driveId:'1yWkb7vvCg4HJ1PEUO1wgC4hI19bK-wEb', label:'Interior 06', thumb:T+'amb6.png', orient:'landscape' },
-  { driveId:'1Rc6cyedfkjbb2uSIUjwrltZjTGh4_OSP', label:'Interior 07', thumb:T+'amb7.png', orient:'landscape' },
-  { driveId:'14UrEYR2l6355whxzKi9XLKLH-AcbObFC', label:'Interior 08', thumb:T+'amb8.png', orient:'landscape' },
-  { driveId:'1AfUOVMN4uZm7TAHzHCuINe17FzeVXRhn', label:'Interior 09', thumb:T+'amb9.png', orient:'portrait' },
+  { file:'amb 1.mp4', label:'Interior 01', thumb:T+'amb1.jpg', orient:'portrait' },
+  { file:'amb 2.mp4', label:'Interior 02', thumb:T+'amb2.png', orient:'portrait' },
+  { file:'amb 3.mp4', label:'Interior 03', thumb:T+'amb3.jpeg', orient:'portrait' },
+  { file:'amb 4.mp4', label:'Interior 04', thumb:T+'amb4.png', orient:'portrait' },
+  { file:'amb 5.mp4', label:'Interior 05', thumb:T+'amb5.png', orient:'portrait' },
+  { file:'amb 6.mp4', label:'Interior 06', thumb:T+'amb6.jpeg', orient:'landscape' },
+  { file:'amb 7.mp4', label:'Interior 07', thumb:T+'amb7.png', orient:'landscape' },
+  { file:'amb 8.mp4', label:'Interior 08', thumb:T+'amb8.png', orient:'landscape' },
+  { file:'amb 9.mp4', label:'Interior 09', thumb:T+'amb9.png', orient:'portrait' },
 ];
 
 const introsVideos = [
-  { driveId:'1ZWOBS8TXGTMSNE8z7sy-uumgxXpH1lnc', label:'Intro 01', thumb:T+'INTRO1.png', orient:'landscape' },
-  { driveId:'1W46KYjtSZPam83Uo8ytayNfgv7hy5HoT', label:'Intro 02', thumb:T+'INTRO2.png', orient:'landscape' },
-  { driveId:'1_rIqdJYcBkM9ZbgByyHdyh6bWNmSqDx6', label:'Intro 03', thumb:T+'INTRO3.png', orient:'landscape' },
+  { file:'intro 1.mp4', label:'Intro 01', thumb:T+'INTRO1.png', orient:'landscape' },
+  { file:'intro 2.mp4', label:'Intro 02', thumb:T+'INTRO2.png', orient:'landscape' },
+  { file:'intro 3.mp4', label:'Intro 03', thumb:T+'INTRO3.jpeg', orient:'landscape' },
 ];
 
 const logosVideos = [
-  { driveId:'1hdcjOhpSsHn3mwwul0weDOVVMdzc5gLY', label:'Logo Reveal 01', thumb:T+'L1.png', orient:'landscape' },
-  { driveId:'1O-sA4vwcQ1J-u0jUBJ1Qvj4ZBEeDR9j6', label:'Logo Reveal 02', thumb:T+'L2.png', orient:'portrait' },
-  { driveId:'1VwkZGEmA7cFXGiFiSSCcSyuSvVQLf8hh', label:'Logo Reveal 03', thumb:T+'L3.png', orient:'portrait' },
-  { driveId:'1RxPbBC8v-PAfvrpkqbLchEQP3gEsRE97', label:'Logo Reveal 04', thumb:T+'L4.png', orient:'portrait' },
-  { driveId:'1HAik0kp-AWXEdETNrL_FIHmOp9ZGnfqT', label:'Logo Reveal 05', thumb:T+'L5.png', orient:'portrait' },
-  { driveId:'1hRk3NjfvpohrtzBXiKkMZPoXdQ5ITWjk', label:'Logo Reveal 06', thumb:T+'L6.png', orient:'landscape' },
+  { file:'l1.mp4', label:'Logo Reveal 01', thumb:T+'L1.png', orient:'landscape' },
+  { file:'l2.mp4', label:'Logo Reveal 02', thumb:T+'L2.png', orient:'portrait' },
+  { file:'l3.mp4', label:'Logo Reveal 03', thumb:T+'L3.png', orient:'portrait' },
+  { file:'l4.mp4', label:'Logo Reveal 04', thumb:T+'L4.png', orient:'portrait' },
+  { file:'l5.mp4', label:'Logo Reveal 05', thumb:T+'L5.png', orient:'portrait' },
+  { file:'l6.mp4', label:'Logo Reveal 06', thumb:T+'L6.png', orient:'landscape' },
 ];
 
 const aiVideos = [
-  { driveId:'11iGIB7iDRFPiB1jgPTMQt1y9p6rc-zRq', label:'AI Edit 01', thumb:T+'ai1.png', orient:'portrait' },
-  { driveId:'19H77RUugnob_z8PmJjqkOjBzul45E47C', label:'AI Edit 02', thumb:T+'ai2.png', orient:'portrait' },
-  { driveId:'1aHb4sFP2qKdcisXOrRXoV1bE21i8X8lH', label:'AI Edit 03', thumb:T+'ai3.png', orient:'portrait' },
-  { driveId:'1P4_K3hdZm-QW4o4_9SMGBKDjqC5VE8j4', label:'AI Edit 04', thumb:T+'ai4.png', orient:'portrait' },
-  { driveId:'1NLzLNmSeALpsEcr_h_5KEckLheL21D95', label:'AI Edit 05', thumb:T+'ai5.png', orient:'portrait' },
+  { file:'ai 1.mp4', label:'AI Edit 01', thumb:T+'ai1.png', orient:'portrait' },
+  { file:'ai 2.mp4', label:'AI Edit 02', thumb:T+'ai2.png', orient:'portrait' },
+  { file:'ai 3.mp4', label:'AI Edit 03', thumb:T+'ai3.png', orient:'portrait' },
+  { file:'ai 4.mp4', label:'AI Edit 04', thumb:T+'ai4.png', orient:'portrait' },
+  { file:'ai 5.mp4', label:'AI Edit 05', thumb:T+'ai5.png', orient:'portrait' },
 ];
 
 // ─── BUILD CAROUSELS
@@ -510,7 +514,7 @@ allSections.forEach(({ trackId, cntId, data }) => {
         <div class="vc-play-btn">&#9654;</div>
       </div>
       <div class="vc-label">${v.label}</div>`;
-    card.addEventListener('click', () => vcOpen(v.driveId, v.label, v.orient));
+    card.addEventListener('click', () => vcOpen(v.file, v.label, v.orient));
     track.appendChild(card);
   });
 
@@ -551,10 +555,12 @@ allSections.forEach(({ trackId, cntId, data }) => {
 });
 
 // ─── VIDEO MODAL
-function vcOpen(driveId, label, orient) {
+function vcOpen(fileName, label, orient) {
   document.getElementById('vcmTitle').textContent = '▶  ' + label;
-  document.getElementById('vcmEmbed').src = `https://drive.google.com/file/d/${driveId}/preview`;
-  document.getElementById('vcmYtLink').href = `https://drive.google.com/file/d/${driveId}/view`;
+  const video = document.getElementById('vcmVideo');
+  video.src = r2VideoUrl(fileName);
+  video.load();
+  document.getElementById('vcmYtLink').href = r2VideoUrl(fileName);
   const box    = document.querySelector('.vcm-box');
   const modal  = document.getElementById('vcModal');
   modal.classList.add('open');
@@ -579,7 +585,10 @@ function vcOpen(driveId, label, orient) {
 
 function vcClose() {
   document.getElementById('vcModal').classList.remove('open');
-  document.getElementById('vcmEmbed').src = '';
+  const video = document.getElementById('vcmVideo');
+  video.pause();
+  video.removeAttribute('src');
+  video.load();
   document.body.style.overflow = '';
 }
 

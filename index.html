@@ -343,7 +343,7 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
 .vcm-close{background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;transition:.2s;display:flex;align-items:center;}
 .vcm-close:hover{color:var(--c1);}
 .vcm-frame{flex:1;min-height:0;position:relative;background:#000;display:flex;align-items:center;justify-content:center;padding:0;margin:0;overflow:hidden;}
-.vcm-frame iframe{width:100%;height:100%;border:none;display:block;object-fit:cover;}
+.vcm-frame video{width:100%;height:100%;display:block;object-fit:contain;background:#000;}
 .vcm-footer{padding:12px 18px;border-top:1px solid rgba(255,255,255,.06);}
 .vcm-ytbtn{display:flex;align-items:center;gap:14px;border:1px solid rgba(255,0,64,.3);padding:10px 14px;text-decoration:none;color:var(--w);background:rgba(255,0,64,.05);transition:.4s;position:relative;overflow:hidden;width:100%;}
 .vcm-ytbtn::before{content:'';position:absolute;inset:0;background:var(--c1);transform:translateX(-105%);transition:.4s;z-index:0;}
@@ -407,7 +407,7 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
   .vcm-ytbtn-ar{display:none;}
   .vcm-box{max-height:90vh;}
   .vcm-frame{display:flex;align-items:center;justify-content:center;overflow:hidden;}
-  .vcm-frame iframe{width:100%;height:100%;object-fit:cover;border:none;display:block;}
+  .vcm-frame video{width:100%;height:100%;object-fit:contain;display:block;}
 
   /* Hide header/footer for portrait videos */
   .vcm-box.portrait .vcm-header{display:none;}
@@ -981,12 +981,12 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
       <button class="vcm-close" onclick="vcClose()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="vcm-frame">
-      <iframe id="vcmEmbed" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <video id="vcmVideo" controls playsinline preload="metadata"></video>
     </div>
     <div class="vcm-footer">
       <a id="vcmYtLink" href="#" target="_blank" class="vcm-ytbtn">
         <div class="vcm-ytbtn-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="7" y1="3" x2="6" y2="9"/><line x1="13" y1="3" x2="12" y2="9"/><line x1="19" y1="3" x2="18" y2="9"/></svg></div>
-        <div class="vcm-ytbtn-tx"><span>VIEW ORIGINAL</span><strong>Open in Google Drive</strong></div>
+        <div class="vcm-ytbtn-tx"><span>VIEW ORIGINAL</span><strong>Open Original</strong></div>
         <div class="vcm-ytbtn-ar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
       </a>
     </div>
@@ -1092,7 +1092,7 @@ document.querySelectorAll('.bgl,.bol,.nhire').forEach(btn=>{
 });
 
 // ─── EDIT CELLS
-document.querySelectorAll('.ec').forEach(c=>c.addEventListener('click',()=>open('https://drive.google.com/drive/folders/14ZWxM2ogUTqzyglOwAUaIDDN0oNrOmSz?usp=sharing','_blank')));
+document.querySelectorAll('.ec').forEach(c=>c.addEventListener('click',()=>open('all-edits.html','_blank')));
 
 // ─── YOUTUBE VIDEO CARD
 function setYouTube(){
@@ -1111,15 +1111,23 @@ function setYouTube(){
 }
 
 // ─── VIDEO CAROUSEL
-// To swap real videos: replace each driveId with the FILE ID from your Drive share link
-// e.g. drive.google.com/file/d/THIS_PART/view — file must be "Anyone with the link can view"
+const R2_BASE = 'https://pub-58088dda9e614bf3b6c44e57089bcd95.r2.dev';
+
+function r2VideoUrl(fileName) {
+  return `${R2_BASE}/${encodeURIComponent(fileName)}`;
+}
+
+function isR2File(value) {
+  return /\.(mp4|mov)$/i.test(value || '');
+}
+
 const vcVideos = [
-  { driveId:'1EdSaRZtZl1U9YpHMVnT6HKsuAterM35q', label:'Edit 01 — Cinematic Reel',   thumb:'assets/top-6/1.jpg', orient:'portrait'  },
-  { driveId:'1Ikv-NC8LLHDLQju5bBJseemuAG4qcOsm', label:'Edit 02 — Instagram Reel',        thumb:'assets/top-6/2.jpg', orient:'portrait'  },
-  { driveId:'1ARPcodtfA09NgFNCu4aaUTcQ5onQDOq0', label:'Edit 03 — Gym Edit',        thumb:'assets/top-6/3.jpg', orient:'portrait' },
-  { driveId:'1vUwdhKWFxHX3ZM-eP8u5hc9ifDV-QnOX', label:'Edit 04 — Motion Graphics',     thumb:'assets/top-6/4.jpeg', orient:'portrait'  },
-  { driveId:'1qG2iEWFUcx8hDtSmqR_8CatqPme_qZiz', label:'Edit 05 — Speed Ramp Edit',      thumb:'assets/top-6/5.jpg', orient:'portrait'  },
-  { driveId:'1Bv5vWy5oHyXhRP5fpTywMBNrG4Xj1qta', label:'Edit 06 — Color Grade',         thumb:'assets/top-6/6.jpg', orient:'portrait'  },
+  { file:'f1.mp4',    label:'Edit 01 — Cinematic Reel',   thumb:'assets/top-6/1.jpg', orient:'portrait' },
+  { file:'auto1.mp4', label:'Edit 02 — Instagram Reel',   thumb:'assets/top-6/2.jpg', orient:'portrait' },
+  { file:'r5.mp4',    label:'Edit 03 — Gym Edit',         thumb:'assets/top-6/3.jpg', orient:'portrait' },
+  { file:'h3_1.mp4',  label:'Edit 04 — Motion Graphics',  thumb:'assets/top-6/4.jpeg', orient:'portrait' },
+  { file:'amb 1.mp4', label:'Edit 05 — Speed Ramp Edit',  thumb:'assets/top-6/5.jpg', orient:'portrait' },
+  { file:'r6.mov',    label:'Edit 06 — Color Grade',      thumb:'assets/top-6/6.jpg', orient:'portrait' },
 ];
 const vcTrack = document.getElementById('vcTrack');
 const vcWrapper = vcTrack.parentElement;
@@ -1137,7 +1145,8 @@ vcVideos.forEach((v) => {
       <div class="vc-play-btn">&#9654;</div>
     </div>
     <div class="vc-label">${v.label}</div>`;
-  card.addEventListener('click', () => vcOpen(v.driveId, v.label, v.orient));
+  const videoKey = v.file || v.driveId;
+  card.addEventListener('click', () => vcOpen(videoKey, v.label, v.orient));
   vcTrack.appendChild(card);
 });
 const getMax = () => {
@@ -1160,10 +1169,17 @@ vcNext.addEventListener('click', () => {
 vcWrapper.addEventListener('scroll', refresh, { passive: true });
 window.addEventListener('resize', () => setTimeout(refresh, 120), { passive: true });
 setTimeout(refresh, 100);
-function vcOpen(driveId, label, orient) {
+function driveVideoUrl(driveId) {
+  return `https://drive.google.com/uc?export=download&id=${driveId}`;
+}
+
+function vcOpen(videoKey, label, orient) {
   document.getElementById('vcmTitle').textContent = '▶  ' + label;
-  document.getElementById('vcmEmbed').src = `https://drive.google.com/file/d/${driveId}/preview`;
-  document.getElementById('vcmYtLink').href = `https://drive.google.com/file/d/${driveId}/view`;
+  const video = document.getElementById('vcmVideo');
+  const useR2 = isR2File(videoKey);
+  video.src = useR2 ? r2VideoUrl(videoKey) : driveVideoUrl(videoKey);
+  video.load();
+  document.getElementById('vcmYtLink').href = useR2 ? r2VideoUrl(videoKey) : `https://drive.google.com/file/d/${videoKey}/view`;
   const box = document.querySelector('.vcm-box');
   const maxW = Math.round(window.innerWidth * 0.92);
   const maxH = Math.round(window.innerHeight * 0.92);
@@ -1189,7 +1205,10 @@ function vcOpen(driveId, label, orient) {
 }
 function vcClose() {
   document.getElementById('vcModal').classList.remove('open');
-  document.getElementById('vcmEmbed').src = '';
+  const video = document.getElementById('vcmVideo');
+  video.pause();
+  video.removeAttribute('src');
+  video.load();
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e => { if(e.key === 'Escape') vcClose(); });
