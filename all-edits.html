@@ -103,8 +103,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 50px;display:fl
 .vcm-title{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--c2);}
 .vcm-close{background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;transition:.2s;display:flex;align-items:center;}
 .vcm-close:hover{color:var(--c1);}
-.vcm-frame{flex:1;min-height:0;position:relative;background:#000;display:flex;align-items:center;justify-content:center;}
-.vcm-frame iframe{width:100%;height:100%;border:none;display:block;}
+.vcm-frame{flex:1;min-height:0;position:relative;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.vcm-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none;display:block;}
 .vcm-footer{padding:12px 18px;border-top:1px solid rgba(255,255,255,.06);}
 .vcm-ytbtn{display:flex;align-items:center;gap:14px;border:1px solid rgba(255,0,64,.3);padding:14px 18px;text-decoration:none;color:var(--w);background:rgba(255,0,64,.05);transition:.4s;position:relative;overflow:hidden;width:100%;}
 .vcm-ytbtn::before{content:'';position:absolute;inset:0;background:var(--c1);transform:translateX(-105%);transition:.4s;z-index:0;}
@@ -199,20 +199,6 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 60px;display:flex
     <div class="vc-wrap">
       <div class="vc-track-wrap">
         <div class="vc-track" id="track-auto"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3. EVENTS -->
-  <div class="edit-section rv">
-    <div class="section-header">
-      <span class="section-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
-      <span class="section-title">EVENTS</span>
-      <span class="section-count" id="cnt-events"></span>
-    </div>
-    <div class="vc-wrap">
-      <div class="vc-track-wrap">
-        <div class="vc-track" id="track-events"></div>
       </div>
     </div>
   </div>
@@ -387,23 +373,27 @@ document.querySelectorAll('.rv').forEach(el => rvObs.observe(el));
 const T = 'assets/all%20thumbnails/';
 
 const reelsVideos = [
-  { driveId:'1XHm4Q9t6fgi1QEQ2kV15B5r-d7kRBpmr', label:'Reel 01',  thumb:T+'R1.png',   orient:'portrait' },
-  { driveId:'1C6NiMbY-k8yxhTwJkk34PQndpiJsHqAC', label:'Reel 02',  thumb:T+'R2.png',   orient:'portrait' },
-  { driveId:'1Klzr2UMcG2BGuQjFHl2gMbPVXNXcPjec', label:'Reel 03',  thumb:T+'R3.png',   orient:'portrait' },
-  { driveId:'1xRNkLO6B2DqClWEu9UtDi5TsYQAhiKAA', label:'Reel 04',  thumb:T+'R4.png',   orient:'portrait' },
-  { driveId:'1MFHgApXsld3viIuFdXKo6hF_WSRkqhlh', label:'Reel 05',  thumb:T+'R5.png',   orient:'portrait' },
-  { driveId:'1tiaaAshXrMty2pJoYRLY0zwbeKSjQ7S2', label:'Reel 06',  thumb:T+'R6.png',   orient:'portrait' },
-  { driveId:'14Ec9PcoltRtO2VdXhxurk4qlb7SS2Hlp', label:'Reel 07',  thumb:T+'R7.png',   orient:'portrait' },
-  { driveId:'1c7bR4iI9VOGqms6-3sCxhRoXGHugx_jD', label:'Reel 08',  thumb:T+'R8.png',   orient:'portrait' },
-  { driveId:'1MM0IMVzwAjNwQ8nvz3SeejBVEarCwipa', label:'Reel 09',  thumb:T+'R9.png',   orient:'portrait' },
-  { driveId:'1OL7hJgHf6eFjbFobvoPhcb3mTltmGp6B', label:'Reel 10',  thumb:T+'R10.png',  orient:'portrait' },
-  { driveId:'1pIfDwTP7031cVcaGvbLGgThatqlM2CtS', label:'Reel 11',  thumb:T+'R11.png',  orient:'portrait' },
-  { driveId:'1w5wtrf3ai86Exogl4hJ-WSqXDBHGOPqx', label:'Reel 12',  thumb:T+'R12.png',  orient:'portrait' },
-  { driveId:'1ulmtXfvWplCzfnS6Ec4yZPqspk33MVsc', label:'Reel 13',  thumb:T+'R13.png',  orient:'portrait' },
-  { driveId:'1kpLF9ljLQlwIrX02V8NSw1qj43rV5Lau', label:'Reel 14',  thumb:T+'R14.png',  orient:'portrait' },
-  { driveId:'1Z0UVALW6CxR3JF9L36Tsx_qzbpiszTGU', label:'Reel 15',  thumb:T+'R15.png',  orient:'portrait' },
-  { driveId:'1TtqCKIgXPCsYPSq7TxEnFgj-D8skZmDp', label:'Reel 16',  thumb:T+'R16.png',  orient:'portrait' },
-  { driveId:'1tOBaBdXTzEnVuvc_d3KxmV2XqNQ2IUtI', label:'Reel 17',  thumb:T+'R17.png',  orient:'portrait' },
+  { driveId:'1l8PkUN95Eaae2ZzzGcHArLA5BnxxBJTP', label:'Reel 01', thumb:T+'e1.png', orient:'portrait' },
+  { driveId:'1F7I62gPHLl1KbM_RmgGYroIBxW5C2kZZ', label:'Reel 02', thumb:T+'e2.png', orient:'portrait' },
+  { driveId:'1zY5cpQMXUVIGAaOdIUb05P0Ijf4ONW4z', label:'Reel 03', thumb:T+'e3.png', orient:'portrait' },
+  { driveId:'1OPd1LJv3VaVBa_m68diseBahfUu6EePX', label:'Reel 04', thumb:T+'e4.png', orient:'portrait' },
+  { driveId:'1XHm4Q9t6fgi1QEQ2kV15B5r-d7kRBpmr', label:'Reel 05',  thumb:T+'R1.png',   orient:'portrait' },
+  { driveId:'1C6NiMbY-k8yxhTwJkk34PQndpiJsHqAC', label:'Reel 06',  thumb:T+'R2.png',   orient:'portrait' },
+  { driveId:'1Klzr2UMcG2BGuQjFHl2gMbPVXNXcPjec', label:'Reel 07',  thumb:T+'R3.png',   orient:'portrait' },
+  { driveId:'1xRNkLO6B2DqClWEu9UtDi5TsYQAhiKAA', label:'Reel 08',  thumb:T+'R4.png',   orient:'portrait' },
+  { driveId:'1MFHgApXsld3viIuFdXKo6hF_WSRkqhlh', label:'Reel 09',  thumb:T+'R5.png',   orient:'portrait' },
+  { driveId:'1tiaaAshXrMty2pJoYRLY0zwbeKSjQ7S2', label:'Reel 10',  thumb:T+'R6.png',   orient:'portrait' },
+  { driveId:'14Ec9PcoltRtO2VdXhxurk4qlb7SS2Hlp', label:'Reel 11',  thumb:T+'R7.png',   orient:'portrait' },
+  { driveId:'1c7bR4iI9VOGqms6-3sCxhRoXGHugx_jD', label:'Reel 12',  thumb:T+'R8.png',   orient:'portrait' },
+  { driveId:'1MM0IMVzwAjNwQ8nvz3SeejBVEarCwipa', label:'Reel 13',  thumb:T+'R9.png',   orient:'portrait' },
+  { driveId:'1OL7hJgHf6eFjbFobvoPhcb3mTltmGp6B', label:'Reel 14',  thumb:T+'R10.png',  orient:'portrait' },
+  { driveId:'1pIfDwTP7031cVcaGvbLGgThatqlM2CtS', label:'Reel 15',  thumb:T+'R11.png',  orient:'portrait' },
+  { driveId:'1w5wtrf3ai86Exogl4hJ-WSqXDBHGOPqx', label:'Reel 16',  thumb:T+'R12.png',  orient:'portrait' },
+  { driveId:'1ulmtXfvWplCzfnS6Ec4yZPqspk33MVsc', label:'Reel 17',  thumb:T+'R13.png',  orient:'portrait' },
+  { driveId:'1kpLF9ljLQlwIrX02V8NSw1qj43rV5Lau', label:'Reel 18',  thumb:T+'R14.png',  orient:'portrait' },
+  { driveId:'1Z0UVALW6CxR3JF9L36Tsx_qzbpiszTGU', label:'Reel 19',  thumb:T+'R15.png',  orient:'portrait' },
+  { driveId:'1TtqCKIgXPCsYPSq7TxEnFgj-D8skZmDp', label:'Reel 20',  thumb:T+'R16.png',  orient:'portrait' },
+  { driveId:'1tOBaBdXTzEnVuvc_d3KxmV2XqNQ2IUtI', label:'Reel 21',  thumb:T+'R17.png',  orient:'portrait' },
 ];
 
 const autoVideos = [
@@ -414,13 +404,6 @@ const autoVideos = [
   { driveId:'1GpfOkmaRM2PYw7d-gueKH8w6kAka8XrR', label:'Automotive 05', thumb:T+'auto5.png', orient:'portrait' },
   { driveId:'1KIJA9ZsJU042f7XsLmGzCWvAboqMTFP-', label:'Automotive 06', thumb:T+'auto6.png', orient:'portrait' },
   { driveId:'1ksKXO_pYY6tmc7nm_S_TP6eEYTOl02WY', label:'Automotive 07', thumb:T+'auto7.png', orient:'portrait' },
-];
-
-const eventsVideos = [
-  { driveId:'1l8PkUN95Eaae2ZzzGcHArLA5BnxxBJTP', label:'Event 01', thumb:T+'e1.png', orient:'portrait' },
-  { driveId:'1F7I62gPHLl1KbM_RmgGYroIBxW5C2kZZ', label:'Event 02', thumb:T+'e2.png', orient:'portrait' },
-  { driveId:'1zY5cpQMXUVIGAaOdIUb05P0Ijf4ONW4z', label:'Event 03', thumb:T+'e3.png', orient:'portrait' },
-  { driveId:'1OPd1LJv3VaVBa_m68diseBahfUu6EePX', label:'Event 04', thumb:T+'e4.png', orient:'portrait' },
 ];
 
 const foodsVideos = [
@@ -497,7 +480,6 @@ const SVG_NEXT = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" st
 const allSections = [
   { trackId:'track-reels',    cntId:'cnt-reels',    data: reelsVideos    },
   { trackId:'track-auto',     cntId:'cnt-auto',     data: autoVideos     },
-  { trackId:'track-events',   cntId:'cnt-events',   data: eventsVideos   },
   { trackId:'track-foods',    cntId:'cnt-foods',    data: foodsVideos    },
   { trackId:'track-head',     cntId:'cnt-head',     data: headVideos     },
   { trackId:'track-ambiance', cntId:'cnt-ambiance', data: ambianceVideos },
@@ -573,24 +555,24 @@ function vcOpen(driveId, label, orient) {
   document.getElementById('vcmEmbed').src = `https://drive.google.com/file/d/${driveId}/preview`;
   document.getElementById('vcmYtLink').href = `https://drive.google.com/file/d/${driveId}/view`;
   const box    = document.querySelector('.vcm-box');
-  const maxW   = Math.round(window.innerWidth  * 0.92);
-  const maxH   = Math.round(window.innerHeight * 0.92);
-  const chrome = 90;
-  let boxW, boxH;
-  if (orient === 'landscape') {
-    const frameW = Math.min(maxW, 960);
-    const frameH = Math.round(frameW * 9 / 16);
-    boxW = frameW;
-    boxH = Math.min(frameH + chrome, maxH);
-  } else {
-    const frameH = Math.min(Math.round(maxH * 0.82), maxH - chrome);
-    const frameW = Math.round(frameH * 9 / 16);
-    boxW = Math.min(frameW, maxW);
-    boxH = Math.min(frameH + chrome, maxH);
+  const modal  = document.getElementById('vcModal');
+  modal.classList.add('open');
+  const maxW   = Math.round(window.innerWidth  * 0.96);
+  const maxH   = Math.round(window.innerHeight * 0.94);
+  const header = box.querySelector('.vcm-header');
+  const footer = box.querySelector('.vcm-footer');
+  const chrome = (header ? header.offsetHeight : 0) + (footer ? footer.offsetHeight : 0);
+  const frameMaxH = Math.max(0, maxH - chrome);
+  const isLandscape = orient === 'landscape';
+  const ratio = isLandscape ? (16 / 9) : (9 / 16);
+  let frameW = maxW;
+  let frameH = Math.round(frameW / ratio);
+  if (frameH > frameMaxH) {
+    frameH = frameMaxH;
+    frameW = Math.round(frameH * ratio);
   }
-  box.style.width  = boxW + 'px';
-  box.style.height = boxH + 'px';
-  document.getElementById('vcModal').classList.add('open');
+  box.style.width  = frameW + 'px';
+  box.style.height = (frameH + chrome) + 'px';
   document.body.style.overflow = 'hidden';
 }
 
