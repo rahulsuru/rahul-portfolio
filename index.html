@@ -396,6 +396,7 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
   .hstats{flex-wrap:wrap;}
   .egrid{grid-template-columns:1fr;}
   #about .alay > .rvl{display:none;}
+  .hpre{margin-top:34px;}
 
   /* Video Modal Mobile Styles */
   .vcm-ytbtn{padding:8px 12px;gap:6px;flex-wrap:wrap;justify-content:center;}
@@ -983,13 +984,6 @@ footer{padding:28px 50px;border-top:1px solid rgba(255,255,255,.06);display:flex
     <div class="vcm-frame">
       <video id="vcmVideo" controls playsinline preload="metadata"></video>
     </div>
-    <div class="vcm-footer">
-      <a id="vcmYtLink" href="#" target="_blank" class="vcm-ytbtn">
-        <div class="vcm-ytbtn-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="7" y1="3" x2="6" y2="9"/><line x1="13" y1="3" x2="12" y2="9"/><line x1="19" y1="3" x2="18" y2="9"/></svg></div>
-        <div class="vcm-ytbtn-tx"><span>VIEW ORIGINAL</span><strong>Open Original</strong></div>
-        <div class="vcm-ytbtn-ar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-      </a>
-    </div>
   </div>
 </div>
 
@@ -1179,7 +1173,6 @@ function vcOpen(videoKey, label, orient) {
   const useR2 = isR2File(videoKey);
   video.src = useR2 ? r2VideoUrl(videoKey) : driveVideoUrl(videoKey);
   video.load();
-  document.getElementById('vcmYtLink').href = useR2 ? r2VideoUrl(videoKey) : `https://drive.google.com/file/d/${videoKey}/view`;
   const box = document.querySelector('.vcm-box');
   const maxW = Math.round(window.innerWidth * 0.92);
   const maxH = Math.round(window.innerHeight * 0.92);
