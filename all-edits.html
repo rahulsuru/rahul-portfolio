@@ -75,10 +75,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 50px;display:fl
 
 /* VIDEO CAROUSEL (same as main) */
 .vc-wrap{width:100%;}
-.vc-track-wrap{overflow-x:auto;overflow-y:visible;padding:8px 0 12px;scrollbar-width:none;-ms-overflow-style:none;overscroll-behavior-x:contain;}
+.vc-track-wrap{overflow-x:auto;overflow-y:visible;padding:8px 0 12px;scrollbar-width:none;-ms-overflow-style:none;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding:0 8px;}
 .vc-track-wrap::-webkit-scrollbar{display:none;}
 .vc-track{display:flex;gap:16px;width:max-content;}
-.vc-card{flex:0 0 200px;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:#080812;position:relative;overflow:hidden;transition:.3s;border-radius:8px;}
+.vc-card{flex:0 0 200px;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:#080812;position:relative;overflow:hidden;transition:.3s;border-radius:8px;scroll-snap-align:start;scroll-snap-stop:always;}
+.vc-track-wrap.no-scroll{overflow-x:hidden;}
 .vc-card:hover{border-color:rgba(255,0,64,.55);transform:translateY(-5px);box-shadow:0 12px 32px rgba(255,0,64,.15);}
 .vc-thumb-wrap{position:relative;aspect-ratio:9/13;overflow:hidden;background:#0a0a16;}
 .vc-thumb{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.82);transition:.3s;}
@@ -526,12 +527,24 @@ allSections.forEach(({ trackId, cntId, data }) => {
   header.appendChild(nav);
 
   const getMaxScroll = () => Math.max(0, wrapper.scrollWidth - wrapper.clientWidth);
-  const refresh = () => {
+  const clampScroll = () => {
     const maxScroll = getMaxScroll();
     if (wrapper.scrollLeft > maxScroll) wrapper.scrollLeft = maxScroll;
     if (wrapper.scrollLeft < 0) wrapper.scrollLeft = 0;
+  };
+  let rafId = 0;
+  const refresh = () => {
+    rafId = 0;
+    const maxScroll = getMaxScroll();
+    const hasOverflow = maxScroll > 1;
+    wrapper.classList.toggle('no-scroll', !hasOverflow);
+    clampScroll();
     prev.disabled = wrapper.scrollLeft <= 0;
     next.disabled = wrapper.scrollLeft >= maxScroll - 1;
+  };
+  const scheduleRefresh = () => {
+    if (rafId) return;
+    rafId = requestAnimationFrame(refresh);
   };
 
   prev.addEventListener('click', () => {
@@ -542,8 +555,10 @@ allSections.forEach(({ trackId, cntId, data }) => {
     wrapper.scrollBy({ left: CARD_W * 2, behavior: 'smooth' });
     setTimeout(refresh, 320);
   });
-  wrapper.addEventListener('scroll', refresh, { passive: true });
-  setTimeout(refresh, 100);
+  wrapper.addEventListener('scroll', scheduleRefresh, { passive: true });
+  wrapper.addEventListener('touchend', scheduleRefresh, { passive: true });
+  window.addEventListener('resize', () => setTimeout(refresh, 120), { passive: true });
+  setTimeout(refresh, 120);
 });
 
 // ─── VIDEO MODAL
