@@ -20,6 +20,10 @@ body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--w);overf
 #curt::after{width:10px;height:1px;left:-11px;top:50%;transform:translateY(-50%);}
 .cur-hover #curt{width:54px;height:54px;border-color:rgba(0,255,225,.8);}
 .cur-hover #cur{background:var(--c2);box-shadow:0 0 10px var(--c2);}
+/* Hide custom cursor on dynamic play (video modal) */
+body.play-open{cursor:auto;}
+body.play-open #cur,
+body.play-open #curt{display:none;}
 
 /* GRAIN */
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");pointer-events:none;z-index:1;}
@@ -572,6 +576,8 @@ function vcOpen(fileName, label, orient) {
   const box    = document.querySelector('.vcm-box');
   const modal  = document.getElementById('vcModal');
   modal.classList.add('open');
+  document.body.classList.remove('cur-hover');
+  document.body.classList.add('play-open');
   const maxW   = Math.round(window.innerWidth  * 0.96);
   const maxH   = Math.round(window.innerHeight * 0.94);
   const header = box.querySelector('.vcm-header');
@@ -597,6 +603,7 @@ function vcClose() {
   video.pause();
   video.removeAttribute('src');
   video.load();
+  document.body.classList.remove('play-open');
   document.body.style.overflow = '';
 }
 

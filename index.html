@@ -21,6 +21,10 @@ body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--w);overf
 #curt::after{width:10px;height:1px;left:-11px;top:50%;transform:translateY(-50%);}
 .cur-hover #curt{width:54px;height:54px;border-color:rgba(0,255,225,.8);}
 .cur-hover #cur{background:var(--c2);box-shadow:0 0 10px var(--c2);}
+/* Hide custom cursor on dynamic play (video modal) */
+body.play-open{cursor:auto;}
+body.play-open #cur,
+body.play-open #curt{display:none;}
 
 /* CANVAS */
 #pc{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;}
@@ -1195,6 +1199,8 @@ function vcOpen(videoKey, label, orient) {
   box.style.width = boxW + 'px';
   box.style.height = boxH + 'px';
   document.getElementById('vcModal').classList.add('open');
+  document.body.classList.remove('cur-hover');
+  document.body.classList.add('play-open');
   document.body.style.overflow = 'hidden';
 }
 function vcClose() {
@@ -1203,6 +1209,7 @@ function vcClose() {
   video.pause();
   video.removeAttribute('src');
   video.load();
+  document.body.classList.remove('play-open');
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e => { if(e.key === 'Escape') vcClose(); });
